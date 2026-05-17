@@ -19,12 +19,12 @@ Get-ChildItem *.gif | ForEach-Object {
     $outputName = $_.BaseName + ".mp4"
     ffmpeg -i $_.Name -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -b:v 2M $outputName -y
 }
-
+```
 
 ### 🟩 Linux & macOS (Bash)
 
 Open your terminal, navigate (cd) to the folder containing your GIFs, and run the following script:
-Bash
+```Bash
 
 # Ensure ffmpeg is installed beforehand:
 # Debian/Ubuntu: sudo apt install ffmpeg
@@ -37,7 +37,7 @@ for file in *.gif; do
     output_name="${file%.gif}.mp4"
     ffmpeg -i "$file" -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -b:v 2M "$output_name" -y
 done
-
+```
 
 
 This work is licensed under:
