@@ -2,25 +2,26 @@
 Bulk convert GIF animations into mp4 videos to save huge amount of space on disk.
 
 
-For Windows (PowerShell)
+### 🟦 Windows (PowerShell)
+Navigate to the directory containing your `.gif` files, hold `Shift`, right-click an empty area, and select **Open PowerShell window here**. Paste and run the following block:
 
-Open the folder containing your GIFs, hold Shift, right-click an empty space, and select Open PowerShell window here. Paste this script and hit Enter:
-PowerShell
-
-# Install FFmpeg via winget if you don't have it already
+```powershell
+# 1. Install FFmpeg via winget if it isn't already installed
 if (-not (Get-Command ffmpeg -ErrorAction SilentlyContinue)) {
+    Write-Host "FFmpeg not detected. Installing via winget..." -ForegroundColor Cyan
     winget install "FFmpeg (Essentials Build)" --silent
-    Write-Host "Please restart PowerShell for FFmpeg to take effect, then rerun the script." -ForegroundColor Yellow
+    Write-Host "Installation initiated. Please restart PowerShell and rerun this script." -ForegroundColor Yellow
     exit
 }
 
-# Run the bulk conversion
+# 2. Execute bulk conversion loop
 Get-ChildItem *.gif | ForEach-Object {
     $outputName = $_.BaseName + ".mp4"
     ffmpeg -i $_.Name -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -b:v 2M $outputName -y
 }
 
-For Linux / macOS (Bash)
+
+### For Linux / macOS (Bash)
 
 Open your terminal, navigate to your directory containing the GIFs, and run this loop:
 Bash
