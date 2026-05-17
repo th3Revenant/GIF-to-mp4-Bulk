@@ -21,18 +21,22 @@ Get-ChildItem *.gif | ForEach-Object {
 }
 
 
-### For Linux / macOS (Bash)
+### 🟩 Linux & macOS (Bash)
 
-Open your terminal, navigate to your directory containing the GIFs, and run this loop:
+Open your terminal, navigate (cd) to the folder containing your GIFs, and run the following script:
 Bash
 
-# Ensure ffmpeg is installed (Debian/Ubuntu: sudo apt install ffmpeg)
+# Ensure ffmpeg is installed beforehand:
+# Debian/Ubuntu: sudo apt install ffmpeg
+# macOS: brew install ffmpeg
+
 for file in *.gif; do
+    # Prevent errors if no GIF files exist
     [ -e "$file" ] || continue
-    ffmpeg -i "$file" -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -b:v 2M "${file%.gif}.mp4" -y
+    
+    output_name="${file%.gif}.mp4"
+    ffmpeg -i "$file" -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -b:v 2M "$output_name" -y
 done
-
-
 
 
 
